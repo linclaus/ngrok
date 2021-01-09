@@ -1,0 +1,1 @@
+docker run -d -p 8822:8822 -p 8888:8888 -p 443:443 -p 4443:4443 --name ngrok-server linclaus/ngrok-stockmonitor.info /ngrok/bin/ngrokd -domain=stockmonitor.info -httpAddr=:8888

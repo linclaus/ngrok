@@ -10,5 +10,5 @@ if [ -z "$NGROK_DOMAIN" ];then
 fi
 
 echo 'build and push docker image'
-docker build -t $RELEASE_IMAGE_PREFIX-$NGROK_DOMAIN . -f build/Dockerfile --build-arg NGROK_DOMAIN=$NGROK_DOMAIN \
+docker build -t $RELEASE_IMAGE_PREFIX-$NGROK_DOMAIN . -f build/pkg/Dockerfile --build-arg NGROK_DOMAIN=$NGROK_DOMAIN \
         && docker push $RELEASE_IMAGE_PREFIX-$NGROK_DOMAIN
