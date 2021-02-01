@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ngrok
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ngrok
+  template:
+    metadata:
+      labels:
+        app: ngrok
+    spec:
+      containers:
+        - name: ngrok
+          image: linclaus/ngrok-stockmonitor.info:latest
+          command: 
+            - /ngrok/bin/ngrok 
+          args:
+            - -config=./ngrok.cfg
+            - start-all
+          volumeMounts:
+            - name: ngrok
+              mountPath: /ngrok/bin/
+              subPath: ngrok.cfg
+      volumes:
+        - name: ngrok
+          configMap:
+            name: ngrok
