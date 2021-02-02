@@ -15,15 +15,15 @@ spec:
       containers:
         - name: ngrok
           image: linclaus/ngrok-stockmonitor.info:latest
+          imagePullPolicy: IfNotPresent
           command: 
-            - /ngrok/bin/ngrok 
+            - ./ngrok/bin/ngrok 
           args:
-            - -config=./ngrok.cfg
+            - -config=/ngrok/ngrok.cfg
             - start-all
           volumeMounts:
             - name: ngrok
-              mountPath: /ngrok/bin/
-              subPath: ngrok.cfg
+              mountPath: /ngrok
       volumes:
         - name: ngrok
           configMap:
