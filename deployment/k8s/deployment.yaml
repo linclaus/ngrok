@@ -1,30 +1,21 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
   name: ngrok
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: ngrok
-  template:
-    metadata:
-      labels:
-        app: ngrok
-    spec:
-      containers:
+  containers:
+    - name: ngrok
+      image: linclaus/ngrok-stockmonitor.info:latest
+      imagePullPolicy: IfNotPresent
+      command: 
+        - /ngrok/bin/ngrok 
+      args:
+        - -config=/ngrok/config/ngrok.cfg
+        - start-all
+      volumeMounts:
         - name: ngrok
-          image: linclaus/ngrok-stockmonitor.info:latest
-          imagePullPolicy: IfNotPresent
-          command: 
-            - ./ngrok/bin/ngrok 
-          args:
-            - -config=/ngrok/ngrok.cfg
-            - start-all
-          volumeMounts:
-            - name: ngrok
-              mountPath: /ngrok
-      volumes:
-        - name: ngrok
-          configMap:
-            name: ngrok
+          mountPath: /ngrok/config
+  volumes:
+    - name: ngrok
+      configMap:
+        name: ngrok
