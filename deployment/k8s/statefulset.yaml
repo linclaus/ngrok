@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ngrok
+spec:
+  replicas: 1
+  serviceName: ngrok
+  selector:
+    matchLabels:
+      app: ngrok
+  template:
+    metadata:
+      labels:
+        app: ngrok
+    spec:
+      containers:
+        - name: ngrok
+          image: linclaus/ngrok-stockmonitor.info:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - /ngrok/bin/ngrok
+          args:
+            - -config=/ngrok/config/ngrok.cfg
+            - start-all
+          volumeMounts:
+            - name: ngrok
+              mountPath: /ngrok/config
+      volumes:
+        - name: ngrok
+          configMap:
+            name: ngrok
